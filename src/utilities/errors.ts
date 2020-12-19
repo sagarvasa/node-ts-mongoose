@@ -17,6 +17,11 @@ export namespace ErrorConst {
   export const INVALID_URI_FORMAT = 'Invalid URI format';
   export const VALIDATION_ERROR_MSG = 'Please pass valid payload';
   export const REQUEST_ERROR = 'The request was made but no response was received';
+  export const MOVIE_NOT_FOUND = 'Movie details not found';
+  export const DUPLICATE_MOVIE = 'Movie record already exists';
+
+  // Error codes
+  export const MONGO_DUPLICATE_ERROR = 11000;
 }
 
 export class CustomError extends Error {
