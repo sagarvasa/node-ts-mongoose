@@ -57,7 +57,6 @@
     "@types/node": "^14.14.14",
     "@types/shortid": "0.0.29",
     "@typescript-eslint/eslint-plugin": "^4.10.0",
-    "@typescript-eslint/parser": "^4.10.0",
     "eslint": "^7.16.0",
     "mocha": "^8.2.1",
     "prettier": "^2.2.1",

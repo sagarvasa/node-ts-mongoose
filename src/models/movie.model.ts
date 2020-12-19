@@ -1,7 +1,7 @@
 import { Schema, model } from 'mongoose';
 import { IMovieBaseDocument, IMovieBaseModel } from '../types';
 
-var movieSchema = new Schema(
+const movieSchema = new Schema(
   {
     title: {
       type: String,
@@ -16,6 +16,7 @@ var movieSchema = new Schema(
         validator: function (v: string) {
           return /\d{4}/.test(v);
         },
+        /* eslint-disable  @typescript-eslint/no-explicit-any */
         message: (props: any) => `${props.value} is not a valid year`,
       },
     },
@@ -61,14 +62,14 @@ movieSchema.index({ title: 1, locations: 1 });
 movieSchema.index({ releaseYear: -1 });
 movieSchema.index({ createdAt: -1 });
 
-movieSchema.pre<IMovieBaseDocument>('save', function (next) {
+/*movieSchema.pre<IMovieBaseDocument>('save', function (next) {
   MovieModel.count(function (err: Error, count: number) {
     console.log('Err states before saving: ' + err);
     console.log('no of document before saving: ' + count);
     next();
   });
-});
+});*/
 
-var MovieModel = model<IMovieBaseDocument, IMovieBaseModel>('movie', movieSchema, 'movies');
+const MovieModel = model<IMovieBaseDocument, IMovieBaseModel>('movie', movieSchema, 'movies');
 
 export default MovieModel;

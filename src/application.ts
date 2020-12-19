@@ -5,7 +5,7 @@ import { HttpError } from 'http-errors';
 import { Constants } from './utilities/constants';
 import { ErrorConst } from './utilities/errors';
 
-export class GatewayApplication {
+export class ServerApplication {
   public app: Application;
   public port: number;
   /* eslint-disable  @typescript-eslint/no-explicit-any */
@@ -32,6 +32,9 @@ export class GatewayApplication {
     // Log incoming requests
     this.logRequest();
 
+    // Initialize Database
+    this.initializeDatabase();
+
     // Serve incoming routes
     this.serveRequest();
   }
@@ -43,6 +46,16 @@ export class GatewayApplication {
   private async configureLoggingImport() {
     const loggerObj = await import('./utilities/winston');
     return loggerObj.default;
+  }
+
+  private async initializeDatabase() {
+    try {
+      const connection = await import('./helper/mongo-connection');
+      const mongoHelper = new connection.MongoConnectionHelper();
+      await mongoHelper.establishConnection();
+    } catch (e) {
+      this.logger.info('[ts-mongoose] Error in connecting database:: [error]: ' + e.message);
+    }
   }
 
   private initializeDefaultMiddlewares() {
@@ -115,7 +128,8 @@ export class GatewayApplication {
   }
 
   private serveRequest() {
-    const { pingRoutes } = require('./routes/v1');
+    const { pingRoutes, v1CoreRoutes } = require('./routes/v1');
+    this.app.use('/v1/api', v1CoreRoutes);
     this.app.use('/ping', pingRoutes);
 
     // Not Found Route

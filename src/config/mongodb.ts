@@ -1,5 +1,5 @@
 import { MongoConfig } from '../types';
-const env: keyof typeof config = process.env.NODE_ENV as keyof typeof config;
+const env: keyof typeof config = global.env as keyof typeof config;
 
 /* database configuration based on environment
    replace with original values to get connected with database

@@ -7,4 +7,7 @@ export namespace Constants {
   export const ENV_LOCAL = 'local';
   export const ENV_DEV = 'dev';
   export const ENV_PROD = 'production';
+
+  export const DEFAULT_PAGINATION_LIMIT = 10;
+  export const DEFAULT_OFFSET = 0;
 }

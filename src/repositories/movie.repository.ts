@@ -105,4 +105,18 @@ export class MovieRepository {
         }
       });
   }
+
+  async bulkCreateMovies(body: IMoviePopulated[], res?: Response) {
+    const options = { ordered: false };
+    return MovieModel.insertMany(body, options).catch(err => {
+      logger.info('[ts-mongoose][movie-repositories][bulkCreateMovies][err] ' + err.message, res, true);
+      if (err.code === ErrorConst.MONGO_DUPLICATE_ERROR) {
+        throw new CustomError(ErrorConst.CONFLICT, ErrorConst.DUPLICATE_MOVIE);
+      } else if (err.name === 'ValidationError') {
+        throw new CustomError(ErrorConst.BAD_REQUEST, ErrorConst.VALIDATION_ERROR_MSG);
+      } else {
+        throw err;
+      }
+    });
+  }
 }

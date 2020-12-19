@@ -1,10 +1,10 @@
-import { GatewayApplication } from './application';
+import { ServerApplication } from './application';
 import { Constants } from './utilities/constants';
 
 export async function main(config: { rest: { port: number } }) {
   try {
     global.env = process.env.NODE_ENV ?? Constants.ENV_LOCAL;
-    const app = new GatewayApplication(config);
+    const app = new ServerApplication(config);
 
     await app.init();
     app.listen();

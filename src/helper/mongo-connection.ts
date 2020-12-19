@@ -3,8 +3,10 @@ import logger from '../utilities/winston';
 import { createMongoConnection, closeMongoConnection } from '../datasources';
 import mongodbConfig from '../config/mongodb';
 
-class MongoConnectionHelper {
+export class MongoConnectionHelper {
   private connectionObj: Connection | undefined;
+
+  constructor() {}
 
   public async establishConnection(): Promise<Connection> {
     try {
@@ -49,5 +51,3 @@ class MongoConnectionHelper {
     }
   }
 }
-
-export default MongoConnectionHelper;

@@ -6,6 +6,7 @@ const coreController = new CoreController();
 
 // all routes belong to core controllers
 
+/* eslint-disable  @typescript-eslint/no-misused-promises */
 // Load all the movies in DB
 router.post('/movies/load/all', coreController.loadAllMovies);
 
