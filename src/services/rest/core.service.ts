@@ -30,6 +30,11 @@ export default class CoreService {
     }
   }
 
+  public fetchAllMoviesFromSeeder() {
+    const movieJSON = require('../../seeder/movie.json');
+    return movieJSON;
+  }
+
   public async bulkCreateMovies(movies: IMoviePopulated[], res: Response) {
     try {
       return await this.movieRepository.bulkCreateMovies(movies, res);

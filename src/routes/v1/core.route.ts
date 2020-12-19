@@ -9,6 +9,7 @@ const coreController = new CoreController();
 /* eslint-disable  @typescript-eslint/no-misused-promises */
 // Load all the movies in DB
 router.post('/movies/load/all', coreController.loadAllMovies);
+router.post('/movies/seeder/load', coreController.loadAllMoviesFromSeeder);
 
 // Movies CRUD
 router.get('/movies', coreController.getAllMovies);

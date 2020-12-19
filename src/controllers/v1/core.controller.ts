@@ -114,6 +114,35 @@ export class CoreController {
     }
   };
 
+  loadAllMoviesFromSeeder = async (req: Request, res: Response) => {
+    try {
+      let movies = await this.coreService.fetchAllMoviesFromSeeder();
+      movies = movies?.splice(0, 500);
+      const moviesArr: IMoviePopulated[] = [];
+      movies?.forEach((element: FetchedMovie) => {
+        const moviesToInsert: IMoviePopulated = {
+          title: element['title'],
+          releaseYear: element['release_year'],
+          locations: element['locations'],
+          funFacts: element['fun_facts'],
+          productionCompany: element['production_company'],
+          distributor: element['distributor'],
+          director: element['director'],
+          writer: element['writer'],
+          actor1: element['actor_1'],
+          actor2: element['actor_2'],
+          actor3: element['actor_3'],
+        };
+        moviesArr.push(moviesToInsert);
+      });
+      const savedMovies = await this.coreService.bulkCreateMovies(moviesArr, res);
+      return res.status(200).send({ movies: savedMovies });
+    } catch (err) {
+      this.logMessages('[loadAllMovies][err] ' + err.message, res, true);
+      return res.status(err.status || ErrorConst.INTERNAL_SERVER_ERROR).send(err);
+    }
+  };
+
   private logMessages(msg: string, res?: Response, timed?: boolean, err?: Error) {
     logger.info(`[ts-mongoose][controllers][v1][core] ${msg}`, res, timed, err);
   }
